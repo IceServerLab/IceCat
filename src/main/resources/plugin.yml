@@ -1,0 +1,7 @@
+name: IceCat
+version: '${version}'
+main: jp.iceserver.icecat.IceCat
+api-version: 1.18
+authors: [ Minidon ]
+description: アイス生活鯖のインフラ周りを補うためのプラグイン
+website: https://github.com/IceServerLab/IceCat
