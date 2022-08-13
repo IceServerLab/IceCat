@@ -28,6 +28,7 @@ dependencies {
     implementation("net.wesjd", "anvilgui", "1.5.3-SNAPSHOT")
     implementation("com.github.M1n1don", "SmartInvsR", "2.0.0")
     implementation("com.github.hazae41", "mc-kutils", "master-SNAPSHOT")
+    implementation("com.github.NuVotifier.NuVotifier", "nuvotifier-bukkit", "2.7.2")
 
     compileOnly("com.github.MilkBowl", "VaultAPI", "1.7")
     compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
