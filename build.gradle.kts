@@ -1,3 +1,5 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 plugins {
     kotlin("jvm")
     id("com.github.johnrengelman.shadow") version "7.1.2"
@@ -31,17 +33,30 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
 }
 
-val jar by tasks.getting(Jar::class) {
-    manifest {
-        attributes["Main-Class"] = "jp.iceserver.icecat.IceCatKt"
+tasks {
+    shadowJar {
+        archiveBaseName.set("IceCat")
+        archiveVersion.set(project.version.toString())
+        archiveClassifier.set("")
+
+        mergeServiceFiles()
+
+        manifest {
+            attributes(mapOf("Main-Class" to "jp.iceserver.icecat.IceCatKt"))
+        }
     }
 
-    from(
-        configurations.compileClasspath.get().map {
-            if (it.isDirectory) it else zipTree(it)
+    processResources {
+        filteringCharset = "UTF-8"
+        from(sourceSets["main"].resources.srcDirs) {
+            include("**/*.yml")
+            duplicatesStrategy = DuplicatesStrategy.INCLUDE
+            filter<ReplaceTokens>("tokens" to mapOf("version" to project.version))
+            filter<ReplaceTokens>("tokens" to mapOf("name" to "IceCat"))
         }
-    )
-    exclude("META-INF/*.RSA", "META-INF/*.SF", "META-INF/*.DSA")
+    }
 
-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    build {
+        dependsOn(shadowJar)
+    }
 }
