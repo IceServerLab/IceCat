@@ -5,3 +5,7 @@ api-version: 1.18
 authors: [ Minidon ]
 description: アイス生活鯖のインフラ周りを補うためのプラグイン
 website: https://github.com/IceServerLab/IceCat
+
+commands:
+  c2c:
+    description: 個人間取引の画面を開くコマンド

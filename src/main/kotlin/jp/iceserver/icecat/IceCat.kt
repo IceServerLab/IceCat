@@ -58,6 +58,10 @@ class IceCat : AbstractIceCat()
         registerListeners(
             ExplosionPrime()
         )
+
+        registerCommands(
+            "c2c" to C2CCommand()
+        )
     }
 
     private fun setupEconomy(): Boolean
