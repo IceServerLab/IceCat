@@ -1,6 +1,8 @@
 package jp.iceserver.icecat
 
 import dev.m1n1don.smartinvsr.inventory.InventoryManager
+import jp.iceserver.icecat.commands.*
+import jp.iceserver.icecat.listeners.*
 import jp.iceserver.icecat.tables.C2CProviders
 import net.milkbowl.vault.economy.Economy
 import org.jetbrains.exposed.sql.Database
@@ -52,6 +54,10 @@ class IceCat : AbstractIceCat()
                 C2CProviders
             )
         }
+
+        registerListeners(
+            ExplosionPrime()
+        )
     }
 
     private fun setupEconomy(): Boolean
