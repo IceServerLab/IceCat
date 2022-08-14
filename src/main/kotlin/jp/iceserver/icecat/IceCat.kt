@@ -1,7 +1,7 @@
 package jp.iceserver.icecat
 
+import dev.m1n1don.smartinvsr.inventory.InventoryManager
 import net.milkbowl.vault.economy.Economy
-
 
 class IceCat : AbstractIceCat()
 {
@@ -10,6 +10,8 @@ class IceCat : AbstractIceCat()
         lateinit var plugin: IceCat
         lateinit var economy: Economy
     }
+
+    val invManager: InventoryManager = InventoryManager(this)
 
     override fun onEnable()
     {
@@ -21,6 +23,8 @@ class IceCat : AbstractIceCat()
             server.pluginManager.disablePlugin(this);
             return;
         }
+
+        invManager.init()
     }
 
     private fun setupEconomy(): Boolean
