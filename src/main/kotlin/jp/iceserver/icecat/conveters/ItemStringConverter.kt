@@ -9,10 +9,10 @@ import org.bukkit.inventory.meta.Damageable
 
 object ItemStringConverter
 {
-    fun stringToItem(dataSt: String): ItemStack?
+    fun stringToItem(dataSt: String): ItemStack
     {
         val datas = dataSt.split("@@".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        val mt = Material.getMaterial(datas[0])
+        val mt = Material.getMaterial(datas[0])!!
         var amount = 1
         var damage = 0
         try {
@@ -54,9 +54,8 @@ object ItemStringConverter
                 .toTypedArray()
             for (data in datass) flags.add(ItemFlag.valueOf(data))
         }
-        if (mt == null) return null
         val item = ItemStack(mt, amount)
-        val meta = item.itemMeta ?: return null
+        val meta = item.itemMeta
         if (meta is Damageable) meta.damage = damage
         for (en in enchants.keys) {
             val data = enchants[en]!!
