@@ -61,7 +61,8 @@ class IceCat : AbstractIceCat()
         registerCommands(
             "c2c" to C2CCommand(),
             "coi" to CoiCommand(),
-            "spawn" to SpawnCommand()
+            "spawn" to SpawnCommand(),
+            "nickname" to NickNameCommand()
         )
     }
 

@@ -13,6 +13,8 @@ commands:
     description: /co i を省略したコマンド
   spawn:
     description: 自分のスポーンポイントへ戻るコマンド
+  nickname:
+    description: ニックネームの変更をするためのコマンド
 
 permissions:
   icecat.*:
