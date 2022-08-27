@@ -11,3 +11,5 @@ commands:
     description: 個人間取引の画面を開くコマンド
   coi:
     description: /co i を省略したコマンド
+  spawn:
+    description: 自分のスポーンポイントへ戻るコマンド
