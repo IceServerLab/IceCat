@@ -14,7 +14,6 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import java.io.File
 import java.sql.Connection
 
-
 class IceCat : AbstractIceCat()
 {
     companion object
