@@ -13,3 +13,18 @@ commands:
     description: /co i を省略したコマンド
   spawn:
     description: 自分のスポーンポイントへ戻るコマンド
+
+permissions:
+  icecat.*:
+    description: 全権限
+    default: op
+    children:
+      icecat.command.*: true
+  icecat.command.*:
+    description: コマンドの全権限
+    default: true
+    children:
+      icecat.command.nickname: true
+  icecat.command.nickname:
+    description: ニックネームの変更をするための権限
+    default: op
