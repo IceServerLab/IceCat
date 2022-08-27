@@ -9,3 +9,5 @@ website: https://github.com/IceServerLab/IceCat
 commands:
   c2c:
     description: 個人間取引の画面を開くコマンド
+  coi:
+    description: /co i を省略したコマンド
