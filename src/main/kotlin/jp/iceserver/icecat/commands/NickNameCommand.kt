@@ -1,12 +1,15 @@
 package jp.iceserver.icecat.commands
 
 import hazae41.minecraft.kutils.bukkit.msg
+import jp.iceserver.icecat.IceCat
 import jp.iceserver.icecat.utils.setNickName
 import net.wesjd.anvilgui.AnvilGUI
+import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
 
 class NickNameCommand : CommandExecutor
 {
@@ -14,26 +17,34 @@ class NickNameCommand : CommandExecutor
     {
         sender as Player
 
-        if (!sender.hasPermission("icecat.command.nickname"))
-        {
-            sender.msg("&cあなたに実行する権限がありません。")
-            return true
-        }
-
         if (args.isEmpty())
         {
             AnvilGUI.Builder()
-                .title("ニックネームを入力してください")
+                .title("ニックネームを変更する")
+                .text("ここに入力")
+                .itemLeft(ItemStack(Material.PAPER))
+                .plugin(IceCat.plugin)
                 .onComplete { _, it ->
-                    sender.setNickName(it)
-                    sender.msg("&eニックネームを&f「&r${it}&f」&eに変更しました。")
+                    setNickName(sender, it)
                     AnvilGUI.Response.close()
                 }
                 .open(sender)
+            return true
         }
 
-        sender.setNickName(args[0])
-        sender.msg("&eニックネームを&f「&r${args[0]}&f」&eに変更しました。")
+        setNickName(sender, args[0])
         return true
+    }
+
+    private fun setNickName(player: Player, name: String)
+    {
+        if (name.length >= 16)
+        {
+            player.msg("&cカラーコードを含め16文字以内でのみ使用できます。")
+            return
+        }
+
+        player.setNickName(name.replace("&k", ""))
+        player.msg("&eニックネームを&f「&r${name.replace("&k", "")}&f」&eに変更しました。")
     }
 }
