@@ -1,0 +1,23 @@
+#########################################################
+# VaultCraft Configuration File
+# Created by M1n1don
+# - Website: https://www.iceserver.jp/
+# - Discord: https://discord.gg/B4SYTyW
+# - GitHub: https://github.com/IceServerLab/Lobby
+##
+
+# reportContents:
+#   選択できるレポート内容のリスト
+reportContents:
+  - "ハッククライアントの使用"
+  - "禁止ツールの使用"
+  - "意思的なバグ・ラグの使用"
+  - "ゲームバランスを崩壊させる行為"
+  - "スパム行為"
+  - "迷惑行為"
+  - "荒らし行為"
+  - "窃盗"
+  - "誹謗中傷"
+  - "脅迫"
+  - "不快なスキン又はユーザー名"
+  - "その他"
