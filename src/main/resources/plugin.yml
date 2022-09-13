@@ -1,0 +1,31 @@
+name: IceCat
+version: '${version}'
+main: jp.iceserver.icecat.IceCat
+api-version: 1.18
+authors: [ Minidon ]
+description: アイス生活鯖のインフラ周りを補うためのプラグイン
+website: https://github.com/IceServerLab/IceCat
+
+commands:
+  c2c:
+    description: 個人間取引の画面を開くコマンド
+  coi:
+    description: /co i を省略したコマンド
+  nickname:
+    description: ニックネームの変更をするためのコマンド
+    permission: icecat.command.nickname
+    permission-message: "§cあなたに実行する権限がありません。"
+
+permissions:
+  icecat.*:
+    description: 全権限
+    default: op
+    children:
+      icecat.command.*: true
+  icecat.command.*:
+    description: コマンドの全権限
+    children:
+      icecat.command.nickname: true
+  icecat.command.nickname:
+    description: ニックネームの変更をするための権限
+    default: op
