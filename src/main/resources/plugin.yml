@@ -7,14 +7,14 @@ description: アイス生活鯖のインフラ周りを補うためのプラグ�
 website: https://github.com/IceServerLab/IceCat
 
 commands:
-  c2c:
-    description: 個人間取引の画面を開くコマンド
   coi:
     description: /co i を省略したコマンド
   nickname:
     description: ニックネームの変更をするためのコマンド
     permission: icecat.command.nickname
     permission-message: "§cあなたに実行する権限がありません。"
+  report:
+    description: レポートをするためのコマンド
 
 permissions:
   icecat.*:
