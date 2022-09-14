@@ -5,13 +5,17 @@ import dev.m1n1don.smartinvsr.inventory.SmartInventory
 import dev.m1n1don.smartinvsr.inventory.content.InventoryContents
 import dev.m1n1don.smartinvsr.inventory.content.InventoryProvider
 import dev.m1n1don.smartinvsr.inventory.content.SlotIterator
+import hazae41.minecraft.kutils.bukkit.msg
 import jp.iceserver.icecat.IceCat
 import jp.iceserver.icecat.config.MainConfig
+import jp.iceserver.icecat.utils.getSlotPos
 import org.bukkit.ChatColor
 import org.bukkit.Material
+import org.bukkit.Sound
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
+import kotlin.math.floor
 
 @Suppress("DEPRECATION")
 class ReportMenu : InventoryProvider
@@ -40,6 +44,7 @@ class ReportMenu : InventoryProvider
             i.material = Material.ARROW
             i.displayName = "${ChatColor.YELLOW}${ChatColor.BOLD}次に進む"
         }, {
+            player.playSound(player.location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10f, 1f)
             INVENTORY.close(player)
         }))
 
@@ -61,12 +66,14 @@ class ReportMenu : InventoryProvider
                     itemMeta?.removeEnchant(Enchantment.LUCK)
                     itemMeta?.removeItemFlags(ItemFlag.HIDE_ENCHANTS)
                     selectedList.remove(name)
+                    player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BASS, 50f, 1f)
                 }
                 else
                 {
                     itemMeta?.addEnchant(Enchantment.LUCK, 10, true)
                     itemMeta?.addItemFlags(ItemFlag.HIDE_ENCHANTS)
                     selectedList.add(name)
+                    player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_PLING, 30f, 1f)
                 }
 
                 selectedItem?.itemMeta = itemMeta
