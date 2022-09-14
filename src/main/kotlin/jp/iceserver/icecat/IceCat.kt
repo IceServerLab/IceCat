@@ -1,7 +1,9 @@
 package jp.iceserver.icecat
 
 import dev.m1n1don.smartinvsr.inventory.InventoryManager
+import hazae41.minecraft.kutils.bukkit.init
 import jp.iceserver.icecat.commands.*
+import jp.iceserver.icecat.config.MainConfig
 import jp.iceserver.icecat.listeners.*
 import net.milkbowl.vault.economy.Economy
 
@@ -19,12 +21,17 @@ class IceCat : AbstractIceCat()
     {
         plugin = this
 
+        init(MainConfig)
+        MainConfig.autoSave = true
+
+        /*
         if (!setupEconomy())
         {
-            logger.severe(String.format("Vaultの依存関係が見つかりません！", description.name));
-            server.pluginManager.disablePlugin(this);
-            return;
+            logger.severe(String.format("Vaultの依存関係が見つかりません！", description.name))
+            server.pluginManager.disablePlugin(this)
+            return
         }
+         */
 
         invManager.init()
 
@@ -34,7 +41,8 @@ class IceCat : AbstractIceCat()
 
         registerCommands(
             "coi" to CoiCommand(),
-            "nickname" to NickNameCommand()
+            "nickname" to NickNameCommand(),
+            "report" to ReportCommand()
         )
     }
 
