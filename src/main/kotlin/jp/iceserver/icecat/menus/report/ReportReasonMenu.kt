@@ -65,6 +65,7 @@ class ReportReasonMenu(private val target: OfflinePlayer) : InventoryProvider
                         reasons.remove("その他")
                         reasons.add("その他")
                         reasons.add(text)
+                        player.playSound(player.location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 5f, 1f)
                         ReportConfirmMenu.inventory(target, reasons).open(player)
                         AnvilGUI.Response.close()
                     }
