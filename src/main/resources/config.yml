@@ -6,6 +6,10 @@
 # - GitHub: https://github.com/IceServerLab/Lobby
 ##
 
+# prefix:
+#   本プラグインのシステムメッセージのプレフィックス
+prefix: ">>"
+
 # reportContents:
 #   選択できるレポート内容のリスト
 reportContents:
