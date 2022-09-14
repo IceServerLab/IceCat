@@ -54,6 +54,7 @@ class SelectTargetMenu : InventoryProvider
             {
                 player.msg("${MainConfig.prefix} &c自分自身ををレポートすることはできません。")
                 player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BASS, 50f, 1f)
+                INVENTORY.close(player)
                 return@of
             }
 
