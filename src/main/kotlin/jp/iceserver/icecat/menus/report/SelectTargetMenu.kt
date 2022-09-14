@@ -5,9 +5,12 @@ import dev.m1n1don.smartinvsr.inventory.SmartInventory
 import dev.m1n1don.smartinvsr.inventory.content.InventoryContents
 import dev.m1n1don.smartinvsr.inventory.content.InventoryProvider
 import dev.m1n1don.smartinvsr.inventory.content.SlotIterator
+import hazae41.minecraft.kutils.bukkit.msg
 import jp.iceserver.icecat.IceCat
+import jp.iceserver.icecat.config.MainConfig
 import jp.iceserver.icecat.utils.getPlayerHead
 import net.kyori.adventure.text.Component
+import net.wesjd.anvilgui.AnvilGUI
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Material
@@ -56,6 +59,26 @@ class SelectTargetMenu : InventoryProvider
             i.displayName = "${ChatColor.ITALIC}${ChatColor.BOLD}プレイヤーを検索"
         }, {
             player.playSound(player.location, Sound.UI_BUTTON_CLICK, 5f, 1f)
+            AnvilGUI.Builder()
+                .title("プレイヤーを検索")
+                .text("ここに入力")
+                .onComplete { _, text ->
+                    val searchedPlayer = Bukkit.getOfflinePlayer(text)
+                    if (!searchedPlayer.hasPlayedBefore())
+                    {
+                        player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BASS, 50f, 1f)
+                        player.msg("${MainConfig.prefix} &cプレイヤーが見つかりませんでした。")
+                    }
+                    else
+                    {
+                        player.playSound(player.location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 5f, 1f)
+                        ReportReasonMenu.inventory(searchedPlayer).open(player)
+                    }
+
+                    AnvilGUI.Response.close()
+                }
+                .plugin(IceCat.plugin)
+                .open(player)
         }))
 
         val pagination = contents.pagination()
