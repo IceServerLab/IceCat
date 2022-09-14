@@ -24,12 +24,14 @@ class IceCat : AbstractIceCat()
         init(MainConfig)
         MainConfig.autoSave = true
 
+        /*
         if (!setupEconomy())
         {
             logger.severe(String.format("Vaultの依存関係が見つかりません！", description.name))
             server.pluginManager.disablePlugin(this)
             return
         }
+         */
 
         invManager.init()
 
