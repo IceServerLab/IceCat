@@ -7,6 +7,7 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
+import kotlin.math.floor
 
 fun OfflinePlayer.getPlayerHead(name: String): ItemStack
 {
@@ -26,3 +27,6 @@ fun Player.setNickName(name: String)
     this.displayName(coloredName)
     this.playerListName(coloredName)
 }
+
+fun Int.getSlotPos(): Pair<Int, Int>
+    = Pair(floor(this.toDouble() / 9).toInt(), (this - floor(this.toDouble() / 9) * 9).toInt())
