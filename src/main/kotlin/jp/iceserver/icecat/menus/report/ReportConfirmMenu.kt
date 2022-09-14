@@ -47,7 +47,7 @@ class ReportConfirmMenu(private val target: OfflinePlayer, private val reasons: 
             i.displayName = "${ChatColor.GREEN}はい"
         }, {
             val builder = StringBuilder()
-            for (size in 0 until reasons.size - 2) builder.append("${reasons[size].replace("§r", "")}, ")
+            for (size in 0 until reasons.size - (if (reasons.contains("その他")) 2 else 0)) builder.append("${reasons[size].replace("§r", "")}, ")
             builder.setLength(builder.length - 2)
 
             player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_PLING, 30f, 1f)
