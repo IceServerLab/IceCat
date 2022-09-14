@@ -50,6 +50,13 @@ class SelectTargetMenu : InventoryProvider
                 return@of
             }
 
+            if (target == player)
+            {
+                player.msg("${MainConfig.prefix} &c自分自身ををレポートすることはできません。")
+                player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BASS, 50f, 1f)
+                return@of
+            }
+
             player.playSound(player.location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 5f, 1f)
             ReportReasonMenu.inventory(target!!).open(player)
         }))
@@ -71,6 +78,12 @@ class SelectTargetMenu : InventoryProvider
                     }
                     else
                     {
+                        if (searchedPlayer == player)
+                        {
+                            player.msg("${MainConfig.prefix} &c自分自身ををレポートすることはできません。")
+                            player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BASS, 50f, 1f)
+                            return@onComplete AnvilGUI.Response.close()
+                        }
                         player.playSound(player.location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 5f, 1f)
                         ReportReasonMenu.inventory(searchedPlayer).open(player)
                     }
