@@ -25,6 +25,8 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
 
+    implementation("club.minnced:discord-webhooks:0.8.2")
+
     implementation("net.wesjd", "anvilgui", "1.5.3-SNAPSHOT")
     implementation("com.github.M1n1don", "SmartInvsR", "2.0.0")
     implementation("com.github.hazae41", "mc-kutils", "master-SNAPSHOT")
