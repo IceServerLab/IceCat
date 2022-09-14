@@ -48,6 +48,7 @@ class ReportConfirmMenu(private val target: OfflinePlayer, private val reasons: 
         }, {
             val builder = StringBuilder()
             reasons.forEach { builder.append("${it.replace("§r", "")}, ") }
+            builder.setLength(builder.length - 2)
 
             player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_PLING, 30f, 1f)
             player.msg("&2>&a> レポートを送信しました！\n&7(対象者: ${target.name}, 理由: ${builder})")
