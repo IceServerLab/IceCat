@@ -10,6 +10,7 @@ import dev.m1n1don.smartinvsr.inventory.content.InventoryContents
 import dev.m1n1don.smartinvsr.inventory.content.InventoryProvider
 import hazae41.minecraft.kutils.bukkit.msg
 import jp.iceserver.icecat.IceCat
+import jp.iceserver.icecat.config.MainConfig
 import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.OfflinePlayer
@@ -50,7 +51,7 @@ class ReportConfirmMenu(private val target: OfflinePlayer, private val reasons: 
             builder.setLength(builder.length - 2)
 
             player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_PLING, 30f, 1f)
-            player.msg("&2>&a> レポートを送信しました！\n&7(対象者: ${target.name}, 理由: ${builder})")
+            player.msg("${MainConfig.prefix} レポートを送信しました！\n&7(対象者: ${target.name}, 理由: ${builder})")
 
             val client = WebhookClient.withUrl("https://discord.com/api/webhooks/1019605403497148477/XeIlBu2DL5x7Z_cH2knWLQUOv7B6UgzhAK9BkUSzzK7f7J6f1pDtXXObJ1lRCsClWAVv")
 
@@ -80,7 +81,7 @@ class ReportConfirmMenu(private val target: OfflinePlayer, private val reasons: 
             i.displayName = "${ChatColor.RED}いいえ"
         }, {
             player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BASS, 50f, 1f)
-            player.msg("&4>&c> レポートをキャンセルしました。")
+            player.msg("${MainConfig.prefix} レポートをキャンセルしました。")
             inventory(player, listOf()).close(player)
         }))
     }
