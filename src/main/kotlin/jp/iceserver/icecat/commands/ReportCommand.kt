@@ -1,6 +1,6 @@
 package jp.iceserver.icecat.commands
 
-import jp.iceserver.icecat.menus.report.ReportMenu
+import jp.iceserver.icecat.menus.report.SelectTargetMenu
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -10,7 +10,7 @@ class ReportCommand : CommandExecutor
 {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean
     {
-        ReportMenu.INVENTORY.open(sender as Player)
+        SelectTargetMenu.INVENTORY.open(sender as Player)
         return true
     }
 }
