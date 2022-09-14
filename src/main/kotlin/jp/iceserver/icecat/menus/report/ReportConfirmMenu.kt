@@ -15,7 +15,6 @@ import org.bukkit.Material
 import org.bukkit.OfflinePlayer
 import org.bukkit.Sound
 import org.bukkit.entity.Player
-import java.text.SimpleDateFormat
 import java.time.Instant
 
 class ReportConfirmMenu(private val target: OfflinePlayer, private val reasons: List<String>) : InventoryProvider
