@@ -5,35 +5,33 @@ import dev.m1n1don.smartinvsr.inventory.SmartInventory
 import dev.m1n1don.smartinvsr.inventory.content.InventoryContents
 import dev.m1n1don.smartinvsr.inventory.content.InventoryProvider
 import dev.m1n1don.smartinvsr.inventory.content.SlotIterator
-import hazae41.minecraft.kutils.bukkit.msg
 import jp.iceserver.icecat.IceCat
 import jp.iceserver.icecat.config.MainConfig
 import jp.iceserver.icecat.utils.getSlotPos
 import org.bukkit.ChatColor
 import org.bukkit.Material
+import org.bukkit.OfflinePlayer
 import org.bukkit.Sound
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
-import kotlin.math.floor
 
-@Suppress("DEPRECATION")
-class ReportMenu : InventoryProvider
+class ReportReasonMenu(private val target: OfflinePlayer) : InventoryProvider
 {
     companion object
     {
-        val INVENTORY: SmartInventory = SmartInventory.builder()
-            .id("report-main")
-            .title("${ChatColor.DARK_RED}${ChatColor.BOLD}Report${ChatColor.DARK_GRAY}｜${ChatColor.DARK_GREEN}${ChatColor.BOLD}レポート内容の選択")
+        fun inventory(target: OfflinePlayer): SmartInventory = SmartInventory.builder()
+            .id("report-reason")
+            .title("${ChatColor.DARK_RED}${ChatColor.BOLD}Report${ChatColor.DARK_GRAY}｜${ChatColor.DARK_GREEN}${ChatColor.BOLD}レポート理由の選択")
             .size(3, 9)
-            .provider(ReportMenu())
+            .provider(ReportReasonMenu(target))
             .manager(IceCat.plugin.invManager)
             .build()
     }
 
     override fun init(player: Player, contents: InventoryContents)
     {
-        val selectedList = mutableListOf<String>()
+        val selectedList = mutableListOf<Int>()
 
         contents.fillColumn(7, ClickableItem.empty { item ->
             item.material = Material.WHITE_STAINED_GLASS_PANE
@@ -44,8 +42,19 @@ class ReportMenu : InventoryProvider
             i.material = Material.ARROW
             i.displayName = "${ChatColor.YELLOW}${ChatColor.BOLD}次に進む"
         }, {
-            player.playSound(player.location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10f, 1f)
-            INVENTORY.close(player)
+            if (selectedList.size == 0)
+            {
+                player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BASS, 50f, 1f)
+                return@of
+            }
+
+            val reasons = mutableListOf<String>()
+            selectedList.forEach {
+                reasons.add("${ChatColor.RESET}${contents.get(it.getSlotPos().first, it.getSlotPos().second).get().displayName}")
+            }
+
+            player.playSound(player.location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 5f, 1f)
+            ReportConfirmMenu.inventory(target, reasons).open(player)
         }))
 
         val pagination = contents.pagination()
@@ -59,20 +68,19 @@ class ReportMenu : InventoryProvider
             }, { e ->
                 val selectedItem = e.currentItem
                 val itemMeta = selectedItem?.itemMeta
-                val name = "${ChatColor.RESET}${selectedItem?.itemMeta?.displayName}"
 
-                if (selectedList.contains(name))
+                if (selectedList.contains(e.slot))
                 {
                     itemMeta?.removeEnchant(Enchantment.LUCK)
                     itemMeta?.removeItemFlags(ItemFlag.HIDE_ENCHANTS)
-                    selectedList.remove(name)
+                    selectedList.remove(e.slot)
                     player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BASS, 50f, 1f)
                 }
                 else
                 {
                     itemMeta?.addEnchant(Enchantment.LUCK, 10, true)
                     itemMeta?.addItemFlags(ItemFlag.HIDE_ENCHANTS)
-                    selectedList.add(name)
+                    selectedList.add(e.slot)
                     player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_PLING, 30f, 1f)
                 }
 
