@@ -47,7 +47,7 @@ class ReportConfirmMenu(private val target: OfflinePlayer, private val reasons: 
             i.displayName = "${ChatColor.GREEN}はい"
         }, {
             val builder = StringBuilder()
-            reasons.forEach { builder.append("${it.replace("§r", "")}, ") }
+            for (size in 0 until reasons.size - 2) builder.append("${reasons[size].replace("§r", "")}, ")
             builder.setLength(builder.length - 2)
 
             player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_PLING, 30f, 1f)
@@ -61,7 +61,7 @@ class ReportConfirmMenu(private val target: OfflinePlayer, private val reasons: 
             embedBuilder.addField(WebhookEmbed.EmbedField(true, "対象者", target.name.toString()))
             embedBuilder.addField(WebhookEmbed.EmbedField(false, "座標", "${player.location.x} ${player.location.y} ${player.location.z}"))
             embedBuilder.addField(WebhookEmbed.EmbedField(false, "理由", builder.toString()))
-            embedBuilder.addField(WebhookEmbed.EmbedField(false, "詳細", "なし"))
+            embedBuilder.addField(WebhookEmbed.EmbedField(false, "その他", if (reasons.contains("その他")) reasons[reasons.size - 1] else "なし"))
             embedBuilder.setColor(0xa047ff)
             embedBuilder.setThumbnailUrl("https://cravatar.eu/avatar/${target.name}/100")
             embedBuilder.setTimestamp(Instant.ofEpochMilli(System.currentTimeMillis()))

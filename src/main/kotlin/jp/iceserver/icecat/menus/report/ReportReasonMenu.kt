@@ -8,6 +8,7 @@ import dev.m1n1don.smartinvsr.inventory.content.SlotIterator
 import jp.iceserver.icecat.IceCat
 import jp.iceserver.icecat.config.MainConfig
 import jp.iceserver.icecat.utils.getSlotPos
+import net.wesjd.anvilgui.AnvilGUI
 import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.OfflinePlayer
@@ -50,10 +51,28 @@ class ReportReasonMenu(private val target: OfflinePlayer) : InventoryProvider
 
             val reasons = mutableListOf<String>()
             selectedList.forEach {
-                reasons.add("${ChatColor.RESET}${contents.get(it.getSlotPos().first, it.getSlotPos().second).get().displayName}")
+                reasons.add("${ChatColor.RESET}${contents.get(it.getSlotPos().first, it.getSlotPos().second).get().displayName}".replace("§r", ""))
             }
 
             player.playSound(player.location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 5f, 1f)
+
+            if (reasons.contains("その他"))
+            {
+                AnvilGUI.Builder()
+                    .title("「その他」の内容")
+                    .text("ここに入力")
+                    .onComplete { _, text ->
+                        reasons.remove("その他")
+                        reasons.add("その他")
+                        reasons.add(text)
+                        ReportConfirmMenu.inventory(target, reasons).open(player)
+                        AnvilGUI.Response.close()
+                    }
+                    .plugin(IceCat.plugin)
+                    .open(player)
+                return@of
+            }
+
             ReportConfirmMenu.inventory(target, reasons).open(player)
         }))
 
