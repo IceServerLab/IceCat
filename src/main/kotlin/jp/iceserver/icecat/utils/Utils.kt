@@ -9,12 +9,12 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
 import kotlin.math.floor
 
-fun OfflinePlayer.getPlayerHead(name: String): ItemStack
+fun OfflinePlayer.getPlayerHead(): ItemStack
 {
     val itemStack = ItemStack(Material.PLAYER_HEAD)
     val skull = itemStack.itemMeta as SkullMeta
 
-    skull.displayName(Component.text(ChatColor.translateAlternateColorCodes('&', name)))
+    skull.displayName(Component.text("${ChatColor.GOLD}${this.name ?: "Unknown"}"))
     skull.owningPlayer = this
     itemStack.itemMeta = skull
 
