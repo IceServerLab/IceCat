@@ -5,17 +5,15 @@ import dev.m1n1don.smartinvsr.inventory.SmartInventory
 import dev.m1n1don.smartinvsr.inventory.content.InventoryContents
 import dev.m1n1don.smartinvsr.inventory.content.InventoryProvider
 import dev.m1n1don.smartinvsr.inventory.content.SlotIterator
-import hazae41.minecraft.kutils.bukkit.msg
 import jp.iceserver.icecat.IceCat
 import jp.iceserver.icecat.config.MainConfig
-import net.kyori.adventure.text.Component
 import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
-import org.bukkit.inventory.ItemStack
 
+@Suppress("DEPRECATION")
 class ReportMenu : InventoryProvider
 {
     companion object
@@ -56,16 +54,19 @@ class ReportMenu : InventoryProvider
             }, { e ->
                 val selectedItem = e.currentItem
                 val itemMeta = selectedItem?.itemMeta
+                val name = "${ChatColor.RESET}${selectedItem?.itemMeta?.displayName}"
 
-                if (selectedList.contains(selectedItem?.displayName().toString()))
+                if (selectedList.contains(name))
                 {
                     itemMeta?.removeEnchant(Enchantment.LUCK)
-                    selectedList.remove(selectedItem?.displayName().toString())
+                    itemMeta?.removeItemFlags(ItemFlag.HIDE_ENCHANTS)
+                    selectedList.remove(name)
                 }
                 else
                 {
-                    itemMeta?.addEnchant(Enchantment.LUCK, 10, false)
-                    selectedList.add(selectedItem?.displayName().toString())
+                    itemMeta?.addEnchant(Enchantment.LUCK, 10, true)
+                    itemMeta?.addItemFlags(ItemFlag.HIDE_ENCHANTS)
+                    selectedList.add(name)
                 }
 
                 selectedItem?.itemMeta = itemMeta
