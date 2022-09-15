@@ -1,5 +1,7 @@
 package jp.iceserver.icecat.commands
 
+import hazae41.minecraft.kutils.bukkit.msg
+import jp.iceserver.icecat.config.MainConfig
 import jp.iceserver.icecat.menus.report.SelectTargetMenu
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -10,7 +12,14 @@ class ReportCommand : CommandExecutor
 {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean
     {
-        SelectTargetMenu.INVENTORY.open(sender as Player)
+        sender as Player
+        if (sender.isGliding)
+        {
+            sender.msg("${MainConfig.prefix} &cエリトラでの飛行中はレポートできません。")
+            return true
+        }
+
+        SelectTargetMenu.INVENTORY.open(sender)
         return true
     }
 }
