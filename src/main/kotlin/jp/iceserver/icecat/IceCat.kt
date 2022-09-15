@@ -5,7 +5,16 @@ import hazae41.minecraft.kutils.bukkit.init
 import jp.iceserver.icecat.commands.*
 import jp.iceserver.icecat.config.MainConfig
 import jp.iceserver.icecat.listeners.*
+import jp.iceserver.icecat.tables.PlayerData
 import net.milkbowl.vault.economy.Economy
+import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.StdOutSqlLogger
+import org.jetbrains.exposed.sql.addLogger
+import org.jetbrains.exposed.sql.transactions.TransactionManager
+import org.jetbrains.exposed.sql.transactions.transaction
+import java.io.File
+import java.sql.Connection
 
 class IceCat : AbstractIceCat()
 {
@@ -33,10 +42,27 @@ class IceCat : AbstractIceCat()
         }
          */
 
+        val dbFolder = File(dataFolder, "/database")
+        if (!dbFolder.exists()) dbFolder.mkdirs()
+
+        val dbFile = File(dataFolder, "/database/icecat.db")
+        if (!dbFile.exists()) dbFile.createNewFile()
+
+        Database.connect("jdbc:sqlite:${dbFile.path}", "org.sqlite.JDBC")
+        TransactionManager.manager.defaultIsolationLevel = Connection.TRANSACTION_SERIALIZABLE
+
+        transaction {
+            addLogger(StdOutSqlLogger)
+
+            SchemaUtils.create(
+                PlayerData
+            )
+        }
+
         invManager.init()
 
         registerListeners(
-            ExplosionPrime()
+            ExplosionPrime(), PlayerConnection()
         )
 
         registerCommands(

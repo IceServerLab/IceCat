@@ -2,6 +2,7 @@ package jp.iceserver.icecat.commands
 
 import hazae41.minecraft.kutils.bukkit.msg
 import jp.iceserver.icecat.IceCat
+import jp.iceserver.icecat.tables.PlayerData
 import jp.iceserver.icecat.utils.setNickName
 import net.wesjd.anvilgui.AnvilGUI
 import org.bukkit.Material
@@ -10,6 +11,8 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.transactions.transaction
 
 class NickNameCommand : CommandExecutor
 {
@@ -42,6 +45,13 @@ class NickNameCommand : CommandExecutor
         {
             player.msg("&cカラーコードを含め16文字以内でのみ使用できます。")
             return
+        }
+
+        transaction {
+            PlayerData.insert {
+                it[uniqueId] = player.uniqueId
+                it[nickname] = name.replace("&k", "")
+            }
         }
 
         player.setNickName(name.replace("&k", ""))
