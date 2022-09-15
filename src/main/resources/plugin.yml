@@ -1,5 +1,5 @@
 name: IceCat
-version: '1.1.0'
+version: '1.1.1'
 main: jp.iceserver.icecat.IceCat
 api-version: 1.18
 authors: [ Minidon ]
