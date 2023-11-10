@@ -53,7 +53,7 @@ class ReportConfirmMenu(private val target: OfflinePlayer, private val reasons: 
             player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_PLING, 30f, 1f)
             player.msg("${MainConfig.prefix} レポートを送信しました！\n&7(対象者: ${target.name}, 理由: ${builder})")
 
-            val client = WebhookClient.withUrl("https://discord.com/api/webhooks/1019605403497148477/XeIlBu2DL5x7Z_cH2knWLQUOv7B6UgzhAK9BkUSzzK7f7J6f1pDtXXObJ1lRCsClWAVv")
+            val client = WebhookClient.withUrl("https://discord.com/api/webhooks/1172572528946974780/iE3nOAQxEc05XRYDyelooNjrqpOq7-u0y7xbJWjiFLF1zKXZ1BLIG4u7zsGjs_o6N_nP")
 
             val embedBuilder = WebhookEmbedBuilder()
                 .setTitle(WebhookEmbed.EmbedTitle("レポートが届きました。", ""))
