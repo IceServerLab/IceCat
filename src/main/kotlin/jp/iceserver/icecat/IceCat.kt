@@ -62,7 +62,7 @@ class IceCat : AbstractIceCat()
         invManager.init()
 
         registerListeners(
-            ExplosionPrime(), PlayerConnection()
+            PlayerConnection()
         )
 
         registerCommands(
